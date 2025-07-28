@@ -136,7 +136,12 @@ npm run watch
 # Run the main file (1_primitiveTypes.js)
 npm start
 
-# Run specific TypeScript lessons
+# Run any file by name (dynamic)
+npm run start:file <filename>
+npm run start:file 1_primitiveTypes
+npm run start:file 2_instanceTypes
+
+# Run specific TypeScript lessons (predefined)
 npm run start:primitive    # Runs 1_primitiveTypes.js
 npm run start:instance     # Runs 2_instanceTypes.js
 ```
@@ -146,7 +151,12 @@ npm run start:instance     # Runs 2_instanceTypes.js
 # Compile and run main file
 npm run dev
 
-# Compile and run specific lessons
+# Compile and run any file by name (dynamic)
+npm run dev:file <filename>
+npm run dev:file 1_primitiveTypes
+npm run dev:file 2_instanceTypes
+
+# Compile and run specific lessons (predefined)
 npm run dev:primitive      # Build and run 1_primitiveTypes.js
 npm run dev:instance       # Build and run 2_instanceTypes.js
 ```
@@ -170,12 +180,18 @@ npm run rebuild
 
 2. **In another terminal, run your code:**
    ```bash
-   npm run start:primitive
+   npm run start:file 1_primitiveTypes
    ```
 
 3. **Or use the combined approach:**
    ```bash
-   npm run dev:primitive
+   npm run dev:file 1_primitiveTypes
+   ```
+
+4. **For new files, you can run any compiled TypeScript file:**
+   ```bash
+   # If you create src/3_advancedTypes.ts and compile it
+   npm run start:file 3_advancedTypes
    ```
 
 ## Learning Path
@@ -300,7 +316,9 @@ git status
 | `npm run build` | Compile TypeScript files once |
 | `npm run watch` | Compile and watch for changes |
 | `npm start` | Run main JavaScript file |
+| `npm run start:file <filename>` | Run any file by name (dynamic) |
 | `npm run dev` | Build and run main file |
+| `npm run dev:file <filename>` | Build and run any file by name (dynamic) |
 | `npm run clean` | Clean output directory |
 | `npm run rebuild` | Clean and rebuild everything |
 
