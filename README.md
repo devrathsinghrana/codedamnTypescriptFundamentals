@@ -118,6 +118,66 @@ Contains compiled JavaScript files:
 3. Compiled JavaScript appears in the `lib/` directory
 4. Run the compiled JavaScript files with Node.js if needed
 
+## NPM Scripts for Development
+
+The `package.json` file includes several useful scripts for TypeScript development:
+
+### Build Scripts
+```bash
+# Compile TypeScript files once
+npm run build
+
+# Compile and watch for changes (auto-recompile)
+npm run watch
+```
+
+### Execution Scripts
+```bash
+# Run the main file (1_primitiveTypes.js)
+npm start
+
+# Run specific TypeScript lessons
+npm run start:primitive    # Runs 1_primitiveTypes.js
+npm run start:instance     # Runs 2_instanceTypes.js
+```
+
+### Development Scripts (Build + Run)
+```bash
+# Compile and run main file
+npm run dev
+
+# Compile and run specific lessons
+npm run dev:primitive      # Build and run 1_primitiveTypes.js
+npm run dev:instance       # Build and run 2_instanceTypes.js
+```
+
+### Utility Scripts
+```bash
+# Clean compiled output directory
+npm run clean
+
+# Clean and rebuild everything
+npm run rebuild
+```
+
+### Typical Development Workflow
+
+1. **Start development with watch mode:**
+   ```bash
+   npm run watch
+   ```
+   This keeps TypeScript compiler running and auto-compiles on file changes.
+
+2. **In another terminal, run your code:**
+   ```bash
+   npm run start:primitive
+   ```
+
+3. **Or use the combined approach:**
+   ```bash
+   npm run dev:primitive
+   ```
+
 ## Learning Path
 
 This project structure supports learning TypeScript concepts in a progressive manner:
@@ -171,8 +231,59 @@ The `.gitignore` file contains patterns for files and directories that should no
 4. **IDE files**: Personal development environment settings
 5. **System files**: OS-generated files irrelevant to the project
 
+### Removing Previously Committed Files from Git
+
+Sometimes you may add files to `.gitignore` after they've already been committed to the repository. In such cases, you need to remove them from Git tracking while keeping them locally.
+
+#### Example: Removing package-lock.json
+
+```bash
+# Remove the file from Git tracking but keep it locally
+git rm --cached package-lock.json
+
+# Commit the removal
+git commit -m "Remove package-lock.json from Git tracking"
+
+# Push to remote repository
+git push origin main
+```
+
+#### For Multiple Files or Directories
+
+```bash
+# Remove multiple files
+git rm --cached file1.txt file2.txt
+
+# Remove entire directory
+git rm --cached -r directory_name/
+
+# Remove all files matching a pattern
+git rm --cached *.log
+```
+
+#### Important Notes
+
+- **`--cached` flag**: Removes files from Git index but keeps them in your working directory
+- **Without `--cached`**: Would delete the files from both Git and your local filesystem
+- **After removal**: Future changes to these files won't be tracked by Git
+- **Team members**: When they pull these changes, the files will be removed from their repositories too
+
+#### Verification Commands
+
+```bash
+# Check which files are tracked by Git
+git ls-files
+
+# Verify a specific file is no longer tracked
+git ls-files | grep filename
+
+# Check current Git status
+git status
+```
+
 ## Commands Summary
 
+### Setup Commands
 | Command | Purpose |
 |---------|---------|
 | `npm init -y` | Initialize Node.js project |
@@ -181,5 +292,27 @@ The `.gitignore` file contains patterns for files and directories that should no
 | `mkdir src` | Create source directory |
 | `mkdir lib` | Create output directory |
 | `touch src/1_primitiveTypes.ts` | Create first TypeScript file |
-| `npx tsc --watch` | Start compiler in watch mode |
 | `touch .gitignore` | Create Git ignore file |
+
+### Development Commands
+| Command | Purpose |
+|---------|---------|
+| `npm run build` | Compile TypeScript files once |
+| `npm run watch` | Compile and watch for changes |
+| `npm start` | Run main JavaScript file |
+| `npm run dev` | Build and run main file |
+| `npm run clean` | Clean output directory |
+| `npm run rebuild` | Clean and rebuild everything |
+
+### Git Commands
+| Command | Purpose |
+|---------|---------|
+| `git rm --cached <file>` | Remove committed file from Git tracking |
+| `git commit -m "message"` | Commit changes with descriptive message |
+| `git push origin main` | Push changes to remote repository |
+
+### Legacy Commands (Manual)
+| Command | Purpose |
+|---------|---------|
+| `npx tsc --watch` | Start compiler in watch mode (manual) |
+| `node lib/filename.js` | Run specific JavaScript file (manual) |

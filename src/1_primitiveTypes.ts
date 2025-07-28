@@ -8,3 +8,4 @@ let notAssigned: null = null;
 let biggy: bigint = 24n;
 let sym: symbol = Symbol("unique");
 
+console.log("Hello world!")

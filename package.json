@@ -4,12 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node lib/1_primitiveTypes.js",
+    "start:primitive": "node lib/1_primitiveTypes.js",
+    "start:instance": "node lib/2_instanceTypes.js",
+    "dev": "tsc && node lib/1_primitiveTypes.js",
+    "dev:primitive": "tsc && node lib/1_primitiveTypes.js",
+    "dev:instance": "tsc && node lib/2_instanceTypes.js",
+    "clean": "rimraf lib",
+    "rebuild": "npm run clean && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.10"
   }
 }
