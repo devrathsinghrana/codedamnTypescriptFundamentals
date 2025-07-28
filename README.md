@@ -74,13 +74,19 @@ npx tsc --watch
 
 ```
 codedamnTypescriptFundamentals/
+├── .gitignore            # Git ignore rules
 ├── package.json          # Node.js project configuration
+├── package-lock.json     # Lock file for dependencies (ignored by Git)
 ├── tsconfig.json         # TypeScript compiler configuration
+├── scripts/              # Custom utility scripts
+│   └── run-file.js       # Dynamic file execution script
 ├── src/                  # Source TypeScript files
 │   ├── 1_primitiveTypes.ts
 │   └── 2_instanceTypes.ts
-└── lib/                  # Compiled JavaScript output
-    └── 1_primitiveTypes.js
+├── lib/                  # Compiled JavaScript output
+│   ├── 1_primitiveTypes.js
+│   └── 2_instanceTypes.js
+└── node_modules/         # NPM dependencies (ignored by Git)
 ```
 
 ## File Content Explanations
@@ -104,12 +110,17 @@ TypeScript compiler configuration file that specifies:
 ### `src/` Directory
 Contains TypeScript source files:
 - **`1_primitiveTypes.ts`**: Demonstrates basic TypeScript primitive types (string, number, boolean, etc.)
-- **`2_instanceTypes.ts`**: Covers TypeScript instance types (arrays, objects, functions, etc.)
+- **`2_instanceTypes.ts`**: Covers TypeScript instance types (classes, generics, built-in types like RegExp, Set, Array, and custom generic classes)
 
 ### `lib/` Directory
 Contains compiled JavaScript files:
-- **`1_primitiveTypes.js`**: Compiled JavaScript version of the TypeScript file
+- **`1_primitiveTypes.js`**: Compiled JavaScript version of primitive types lesson
+- **`2_instanceTypes.js`**: Compiled JavaScript version of instance types lesson
 - Files are automatically generated when running `npx tsc` or `npx tsc --watch`
+
+### `scripts/` Directory
+Contains custom utility scripts:
+- **`run-file.js`**: Node.js script for dynamic file execution, enables running any compiled file by name
 
 ## Development Workflow
 
@@ -197,9 +208,9 @@ npm run rebuild
 ## Learning Path
 
 This project structure supports learning TypeScript concepts in a progressive manner:
-1. **Primitive Types** - Basic type annotations
-2. **Instance Types** - Complex types like arrays, objects, and functions
-3. **Advanced Types** - Unions, intersections, generics (future files)
+1. **Primitive Types** (`1_primitiveTypes.ts`) - Basic type annotations (string, number, boolean, etc.)
+2. **Instance Types** (`2_instanceTypes.ts`) - Classes, generics, built-in instance types (RegExp, Set, Array), and custom generic classes (Queue example)
+3. **Advanced Types** - Unions, intersections, conditional types (future files)
 
 ## Git Setup and .gitignore
 
