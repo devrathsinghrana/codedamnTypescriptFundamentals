@@ -30,6 +30,8 @@
     "ts:casting": "ts-node src/12_typeCasting.ts",
     "ts:special": "ts-node src/13_typeDeclarationForSpecialVariables.ts",
     "ts:palindrome": "ts-node src/14_palidromePackagePublishedByUs.ts",
+    "ts:readonly": "ts-node src/17_readonly.ts",
+    "ts:enterprise": "ts-node src/18_readonlyBenefitsInEnterpriseApps.ts",
     "ts:run": "ts-node"
   },
   "keywords": [],
