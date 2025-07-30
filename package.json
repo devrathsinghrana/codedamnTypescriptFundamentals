@@ -15,7 +15,22 @@
     "dev:primitive": "tsc && node lib/1_primitiveTypes.js",
     "dev:instance": "tsc && node lib/2_instanceTypes.js",
     "clean": "rimraf lib",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "ts:primitive": "ts-node src/1_primitiveTypes.ts",
+    "ts:instance": "ts-node src/2_instanceTypes.ts",
+    "ts:array": "ts-node src/3_ArrayAndTuple.ts",
+    "ts:object": "ts-node src/4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts",
+    "ts:function": "ts-node src/5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts",
+    "ts:structural": "ts-node src/6_structuralTyping.ts",
+    "ts:class": "ts-node src/7_classTyping.ts",
+    "ts:generics": "ts-node src/8_genericsVsClassSpecialization.ts",
+    "ts:any": "ts-node src/9_anyVsUnknownType.ts",
+    "ts:utility": "ts-node src/10_universalUtility.ts",
+    "ts:assertion": "ts-node src/11_typeAssertion.ts",
+    "ts:casting": "ts-node src/12_typeCasting.ts",
+    "ts:special": "ts-node src/13_typeDeclarationForSpecialVariables.ts",
+    "ts:palindrome": "ts-node src/14_palidromePackagePublishedByUs.ts",
+    "ts:run": "ts-node"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +40,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "rimraf": "^5.0.10"
+    "rimraf": "^5.0.10",
+    "ts-node": "^10.9.2"
   }
 }

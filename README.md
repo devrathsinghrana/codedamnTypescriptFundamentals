@@ -48,7 +48,19 @@ mkdir lib
 ```
 **Purpose**: Creates the output directory where compiled JavaScript files will be generated.
 
-### 6. Create First TypeScript File
+### 7. Install ts-node for Direct TypeScript Execution
+```bash
+npm install ts-node --save-dev
+```
+**Purpose**: Installs ts-node as a development dependency to run TypeScript files directly without compilation.
+
+**Benefits**:
+- **Direct execution**: Run `.ts` files without compiling to `.js` first
+- **Faster development**: No build step needed during development
+- **Real-time feedback**: See TypeScript errors and results immediately
+- **Modern workflow**: Industry-standard approach for TypeScript development
+
+### 8. Create First TypeScript File
 ```bash
 touch src/1_primitiveTypes.ts
 ```
@@ -59,7 +71,7 @@ touch src/1_primitiveTypes.ts
 New-Item -Path "src\1_primitiveTypes.ts" -ItemType File
 ```
 
-### 7. Start TypeScript Compiler in Watch Mode
+### 9. Start TypeScript Compiler in Watch Mode
 ```bash
 npx tsc --watch
 ```
@@ -69,6 +81,39 @@ npx tsc --watch
 - Automatic compilation on file changes
 - Real-time error checking
 - Continuous development workflow
+
+### 10. Add npm Scripts for TypeScript Direct Execution
+Add these scripts to your `package.json` for easier development:
+
+```json
+{
+  "scripts": {
+    "ts:primitive": "ts-node src/1_primitiveTypes.ts",
+    "ts:instance": "ts-node src/2_instanceTypes.ts",
+    "ts:array": "ts-node src/3_ArrayAndTuple.ts",
+    "ts:object": "ts-node src/4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts",
+    "ts:function": "ts-node src/5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts",
+    "ts:structural": "ts-node src/6_structuralTyping.ts",
+    "ts:class": "ts-node src/7_classTyping.ts",
+    "ts:generics": "ts-node src/8_genericsVsClassSpecialization.ts",
+    "ts:any": "ts-node src/9_anyVsUnknownType.ts",
+    "ts:utility": "ts-node src/10_universalUtility.ts",
+    "ts:assertion": "ts-node src/11_typeAssertion.ts",
+    "ts:casting": "ts-node src/12_typeCasting.ts",
+    "ts:special": "ts-node src/13_typeDeclarationForSpecialVariables.ts",
+    "ts:palindrome": "ts-node src/14_palidromePackagePublishedByUs.ts",
+    "ts:run": "ts-node"
+  }
+}
+```
+
+**Usage**: Run any TypeScript lesson directly:
+```bash
+npm run ts:primitive    # Learn primitive types
+npm run ts:array        # Learn arrays and tuples
+npm run ts:class        # Learn class typing
+npm run ts:palindrome   # Test published package
+```
 
 ## Current Project Structure
 
@@ -80,7 +125,7 @@ codedamnTypescriptFundamentals/
 ├── tsconfig.json         # TypeScript compiler configuration
 ├── scripts/              # Custom utility scripts
 │   └── run-file.js       # Dynamic file execution script
-├── src/                  # Source TypeScript files (13 lessons)
+├── src/                  # Source TypeScript files (14 lessons)
 │   ├── 1_primitiveTypes.ts
 │   ├── 2_instanceTypes.ts
 │   ├── 3_ArrayAndTuple.ts
@@ -93,7 +138,8 @@ codedamnTypescriptFundamentals/
 │   ├── 10_universalUtility.ts
 │   ├── 11_typeAssertion.ts
 │   ├── 12_typeCasting.ts
-│   └── 13_typeDeclarationForSpecialVariables.ts
+│   ├── 13_typeDeclarationForSpecialVariables.ts
+│   └── 14_palidromePackagePublishedByUs.ts
 ├── lib/                  # Compiled JavaScript output (auto-generated)
 │   ├── 1_primitiveTypes.js
 │   ├── 2_instanceTypes.js
@@ -106,7 +152,19 @@ codedamnTypescriptFundamentals/
 │   ├── 9_anyVsUnknownType.js
 │   ├── 10_universalUtility.js
 │   ├── 11_typeAssertion.js
-│   └── 12_typeCasting.js
+│   ├── 12_typeCasting.js
+│   └── 14_palidromePackagePublishedByUs.js
+├── palind/               # Published npm package directory
+│   ├── package.json      # Package configuration
+│   ├── tsconfig.json     # TypeScript config for package
+│   ├── README.md         # Package documentation
+│   ├── src/
+│   │   └── index.ts      # Package source code
+│   └── lib/              # Compiled package output
+│       ├── index.js
+│       ├── index.d.ts
+│       ├── index.js.map
+│       └── index.d.ts.map
 └── node_modules/         # NPM dependencies (ignored by Git)
 ```
 
@@ -115,9 +173,22 @@ codedamnTypescriptFundamentals/
 ### `package.json`
 Contains Node.js project metadata including:
 - Project name, version, and description
-- Dependencies (TypeScript)
+- Dependencies (TypeScript, @devrath/palind)
+- DevDependencies (ts-node, rimraf)
 - Scripts for running/building the project
 - Entry point and other configuration
+
+**Key Dependencies:**
+- **TypeScript**: Core TypeScript compiler
+- **ts-node**: TypeScript execution engine for Node.js
+- **@devrath/palind**: Published palindrome checking package
+- **rimraf**: Cross-platform directory cleanup utility
+
+**Script Categories:**
+- **Build scripts**: `build`, `watch`, `clean`, `rebuild`
+- **TypeScript direct execution**: `ts:*` scripts for running .ts files directly
+- **JavaScript execution**: `start:*` scripts for running compiled .js files
+- **Development scripts**: `dev:*` scripts that build and run
 
 ### `tsconfig.json`
 TypeScript compiler configuration file that specifies:
@@ -182,7 +253,29 @@ npm run build
 npm run watch
 ```
 
-### Execution Scripts
+### TypeScript Direct Execution Scripts (Recommended)
+```bash
+# Run TypeScript files directly without compilation using ts-node
+npm run ts:primitive      # Runs 1_primitiveTypes.ts
+npm run ts:instance       # Runs 2_instanceTypes.ts
+npm run ts:array          # Runs 3_ArrayAndTuple.ts
+npm run ts:object         # Runs 4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts
+npm run ts:function       # Runs 5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts
+npm run ts:structural     # Runs 6_structuralTyping.ts
+npm run ts:class          # Runs 7_classTyping.ts
+npm run ts:generics       # Runs 8_genericsVsClassSpecialization.ts
+npm run ts:any            # Runs 9_anyVsUnknownType.ts
+npm run ts:utility        # Runs 10_universalUtility.ts
+npm run ts:assertion      # Runs 11_typeAssertion.ts
+npm run ts:casting        # Runs 12_typeCasting.ts
+npm run ts:special        # Runs 13_typeDeclarationForSpecialVariables.ts
+npm run ts:palindrome     # Runs 14_palidromePackagePublishedByUs.ts
+
+# Generic ts-node runner for any TypeScript file
+npm run ts:run src/filename.ts
+```
+
+### JavaScript Execution Scripts (Traditional)
 ```bash
 # Run the main file (1_primitiveTypes.js)
 npm start
@@ -226,6 +319,27 @@ npm run rebuild
 
 ### Typical Development Workflow
 
+#### **Method 1: Direct TypeScript Execution (Recommended)**
+Run TypeScript files directly without compilation:
+
+```bash
+# Run any TypeScript lesson directly
+npm run ts:primitive      # Learn primitive types
+npm run ts:array          # Learn arrays and tuples
+npm run ts:class          # Learn class typing
+npm run ts:generics       # Learn generics
+npm run ts:palindrome     # Test published package
+```
+
+**Benefits:**
+- **Instant execution** - No compilation step needed
+- **Real-time development** - See results immediately
+- **Error detection** - TypeScript errors shown instantly
+- **Modern workflow** - Industry standard approach
+
+#### **Method 2: Traditional Watch Mode**
+For continuous development with compiled output:
+
 1. **Start development with watch mode:**
    ```bash
    npm run watch
@@ -244,17 +358,35 @@ npm run rebuild
    npm run dev:file 7_classTyping            # Build and run class typing lesson
    ```
 
-4. **For any of the 13 lessons, you can run:**
-   ```bash
-   # Examples with different lessons
-   npm run start:file 4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs
-   npm run start:file 8_genericsVsClassSpecialization
-   npm run start:file 12_typeCasting
-   ```
+#### **Method 3: Quick Testing**
+For testing specific lessons quickly:
+
+```bash
+# Examples with different lessons
+npm run ts:object         # Object types and aliases
+npm run ts:function       # Function type declarations
+npm run ts:structural     # Structural typing concepts
+npm run ts:utility        # Universal utility types
+npm run ts:assertion      # Type assertions
+npm run ts:casting        # Type casting techniques
+```
+
+#### **Method 4: Generic TypeScript Runner**
+For running any TypeScript file:
+
+```bash
+# Run any TypeScript file directly
+npm run ts:run src/1_primitiveTypes.ts
+npm run ts:run src/8_genericsVsClassSpecialization.ts
+npm run ts:run src/14_palidromePackagePublishedByUs.ts
+
+# Or use npx directly
+npx ts-node src/filename.ts
+```
 
 ## Learning Path
 
-This project provides a comprehensive TypeScript learning curriculum with 13 progressive lessons:
+This project provides a comprehensive TypeScript learning curriculum with 14 progressive lessons:
 
 ### **Level 1: Foundations (Lessons 1-3)**
 1. **Primitive Types** (`1_primitiveTypes.ts`) - Basic type annotations (string, number, boolean, undefined, null, bigint, symbol)
@@ -277,10 +409,14 @@ This project provides a comprehensive TypeScript learning curriculum with 13 pro
 12. **Type Casting** (`12_typeCasting.ts`) - Type casting techniques and best practices
 13. **Ambient Declarations** (`13_typeDeclarationForSpecialVariables.ts`) - Using `declare` keyword for external variables
 
+### **Level 5: Practical Application (Lesson 14)**
+14. **Package Usage** (`14_palidromePackagePublishedByUs.ts`) - Using published npm packages in TypeScript projects
+
 ### **Key Learning Notes:**
 - **Array Generics**: `Array<number>` specifies element type, not array size. Use tuple types `[number, number]` for fixed sizes.
 - **Progression**: Each lesson builds upon previous concepts, creating a solid TypeScript foundation.
 - **Hands-on**: All lessons include practical examples and can be executed individually using the dynamic scripts.
+- **Package Integration**: Learn how to use published packages with proper type safety.
 
 ## Git Setup and .gitignore
 
@@ -385,6 +521,7 @@ git status
 |---------|---------|
 | `npm init -y` | Initialize Node.js project |
 | `npm i typescript` | Install TypeScript |
+| `npm install ts-node --save-dev` | Install ts-node for direct TypeScript execution |
 | `npx tsc --init --rootdir src --outdir lib` | Create TypeScript config |
 | `mkdir src` | Create source directory |
 | `mkdir lib` | Create output directory |
@@ -396,6 +533,8 @@ git status
 |---------|---------|
 | `npm run build` | Compile TypeScript files once |
 | `npm run watch` | Compile and watch for changes |
+| `npm run ts:primitive` | Run primitive types lesson directly |
+| `npm run ts:palindrome` | Run palindrome package lesson |
 | `npm start` | Run main JavaScript file |
 | `npm run start:file <filename>` | Run any file by name (dynamic) |
 | `npm run dev` | Build and run main file |
@@ -415,3 +554,49 @@ git status
 |---------|---------|
 | `npx tsc --watch` | Start compiler in watch mode (manual) |
 | `node lib/filename.js` | Run specific JavaScript file (manual) |
+| `npx ts-node src/filename.ts` | Run TypeScript file directly (manual) |
+
+## Modern TypeScript Development with ts-node
+
+### What is ts-node?
+**ts-node** is a TypeScript execution engine and REPL for Node.js that allows you to run TypeScript files directly without the need for a separate compilation step.
+
+### Benefits of ts-node:
+- **🚀 Instant Execution**: Run `.ts` files directly without compilation
+- **⚡ Faster Development**: No build step needed during development
+- **🔄 Real-time Feedback**: See TypeScript errors immediately
+- **🛠️ Modern Workflow**: Industry-standard approach for TypeScript development
+- **🧪 Easy Testing**: Perfect for running individual lessons or experiments
+
+### Usage Examples:
+```bash
+# Run specific lessons
+npm run ts:primitive      # Basic types
+npm run ts:generics       # Advanced generics
+npm run ts:palindrome     # Package usage
+
+# Run any TypeScript file
+npm run ts:run src/any-file.ts
+
+# Direct npx usage
+npx ts-node src/1_primitiveTypes.ts
+```
+
+### Traditional vs Modern Workflow:
+
+#### Traditional Workflow:
+```bash
+# 1. Compile TypeScript
+npm run build
+
+# 2. Run JavaScript
+node lib/1_primitiveTypes.js
+```
+
+#### Modern Workflow with ts-node:
+```bash
+# Run TypeScript directly
+npm run ts:primitive
+```
+
+This project is configured with both approaches, allowing you to choose the workflow that best fits your development style.
