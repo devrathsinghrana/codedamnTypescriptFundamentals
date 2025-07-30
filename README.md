@@ -600,3 +600,454 @@ npm run ts:primitive
 ```
 
 This project is configured with both approaches, allowing you to choose the workflow that best fits your development style.
+
+## 🏢 Enterprise TypeScript Types & Features Reference
+
+This comprehensive reference covers TypeScript types and features extensively used in enterprise applications with **NestJS** and **Next.js**. Keep this handy for quick reference!
+
+### 🎯 **Core Types & Primitives**
+
+#### Basic Types
+```typescript
+// Primitives
+string, number, boolean, undefined, null, bigint, symbol
+
+// Arrays & Tuples
+string[], Array<string>, [string, number], readonly string[]
+
+// Objects
+{ name: string; age: number }
+Record<string, any>
+```
+
+#### Enterprise Usage Examples
+```typescript
+// API Response typing (Next.js)
+interface APIResponse<T> {
+  data: T;
+  status: 'success' | 'error';
+  message?: string;
+}
+
+// Database Entity (NestJS)
+interface User {
+  readonly id: string;
+  email: string;
+  createdAt: Date;
+  permissions: readonly string[];
+}
+```
+
+### 🔧 **Utility Types (Essential for Enterprise)**
+
+#### Built-in Utility Types
+```typescript
+Partial<T>          // Makes all properties optional
+Required<T>         // Makes all properties required
+Readonly<T>         // Makes all properties readonly
+Pick<T, K>          // Pick specific properties
+Omit<T, K>          // Omit specific properties
+Record<K, V>        // Create object type with keys K and values V
+Exclude<T, U>       // Exclude types from union
+Extract<T, U>       // Extract types from union
+NonNullable<T>      // Remove null/undefined
+ReturnType<T>       // Get return type of function
+Parameters<T>       // Get parameters tuple of function
+```
+
+#### Enterprise Examples
+```typescript
+// NestJS DTO patterns
+interface CreateUserDto {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+type UpdateUserDto = Partial<Omit<CreateUserDto, 'password'>>;
+type UserResponse = Omit<User, 'password'>;
+
+// Next.js API types
+type ApiHandler<T = any> = (
+  req: NextApiRequest,
+  res: NextApiResponse<APIResponse<T>>
+) => Promise<void>;
+```
+
+### 🎭 **Advanced Types**
+
+#### Union & Intersection Types
+```typescript
+// Union Types (NestJS Guards, Next.js Auth)
+type UserRole = 'admin' | 'user' | 'moderator';
+type AuthStatus = 'authenticated' | 'unauthenticated' | 'loading';
+
+// Intersection Types (Mixing interfaces)
+type UserWithProfile = User & Profile & Timestamps;
+
+// Discriminated Unions (State management)
+type LoadingState = { status: 'loading' };
+type SuccessState = { status: 'success'; data: any };
+type ErrorState = { status: 'error'; error: string };
+type AppState = LoadingState | SuccessState | ErrorState;
+```
+
+#### Conditional Types
+```typescript
+// API Response conditioning
+type ApiResult<T> = T extends string 
+  ? { message: T } 
+  : { data: T };
+
+// NestJS Service return types
+type ServiceResponse<T> = T extends User 
+  ? UserResponse 
+  : T extends Product 
+  ? ProductResponse 
+  : T;
+```
+
+### 🧬 **Generics (Critical for Reusability)**
+
+#### Generic Functions & Classes
+```typescript
+// Generic API service (Next.js/NestJS)
+class ApiService<T> {
+  async get(id: string): Promise<T> { /* ... */ }
+  async create(data: Partial<T>): Promise<T> { /* ... */ }
+  async update(id: string, data: Partial<T>): Promise<T> { /* ... */ }
+  async delete(id: string): Promise<void> { /* ... */ }
+}
+
+// Generic Repository pattern (NestJS)
+interface Repository<T, K = string> {
+  findById(id: K): Promise<T | null>;
+  findAll(filters?: Partial<T>): Promise<T[]>;
+  create(entity: Omit<T, 'id'>): Promise<T>;
+  update(id: K, updates: Partial<T>): Promise<T>;
+  delete(id: K): Promise<void>;
+}
+```
+
+#### Generic Constraints
+```typescript
+// Entity with ID constraint
+interface Entity {
+  id: string;
+  createdAt: Date;
+}
+
+// Service with entity constraint
+class BaseService<T extends Entity> {
+  protected repository: Repository<T>;
+  
+  async findById(id: string): Promise<T | null> {
+    return this.repository.findById(id);
+  }
+}
+```
+
+### 🏗️ **Interface & Type Aliases**
+
+#### Interface Patterns
+```typescript
+// Extending interfaces (NestJS modules)
+interface BaseConfig {
+  environment: 'development' | 'production' | 'test';
+  port: number;
+}
+
+interface DatabaseConfig extends BaseConfig {
+  host: string;
+  database: string;
+  ssl: boolean;
+}
+
+// Merging interfaces (Module augmentation)
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: User;
+  }
+}
+```
+
+#### Type Alias Patterns
+```typescript
+// Complex type aliases
+type EventHandler<T = any> = (event: T) => void | Promise<void>;
+type Middleware<T = any> = (req: Request, res: Response, next: NextFunction) => T;
+type ConfigProvider = () => Promise<ApplicationConfig>;
+
+// Mapped types
+type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+type Nullable<T> = { [P in keyof T]: T[P] | null };
+```
+
+### 🎪 **Decorators (NestJS Heavy Usage)**
+
+#### Class Decorators
+```typescript
+@Controller('users')
+@UseGuards(AuthGuard)
+export class UserController { }
+
+@Injectable()
+@Scope(Scope.REQUEST)
+export class UserService { }
+
+@Entity('users')
+export class User { }
+```
+
+#### Property & Parameter Decorators
+```typescript
+export class CreateUserDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @MinLength(8)
+  password: string;
+}
+
+export class UserController {
+  constructor(
+    @Inject(UserService) private userService: UserService,
+    @Inject('CONFIG') private config: Config
+  ) {}
+
+  @Get(':id')
+  async getUser(@Param('id') id: string): Promise<User> {
+    return this.userService.findById(id);
+  }
+}
+```
+
+### 🎯 **Template Literal Types**
+
+#### String Manipulation Types
+```typescript
+// API endpoints
+type ApiEndpoint = `api/v1/${string}`;
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type ApiRoute = `${HttpMethod} /${ApiEndpoint}`;
+
+// CSS-in-JS (Next.js styling)
+type CSSProperty = `--${string}`;
+type ThemeColor = 'primary' | 'secondary' | 'accent';
+type ColorVariable = `var(--color-${ThemeColor})`;
+
+// Environment variables
+type EnvKey = `NEXT_PUBLIC_${string}` | `DATABASE_${string}`;
+```
+
+### 🎨 **Mapped Types**
+
+#### Property Transformation
+```typescript
+// Make all properties optional except ID
+type PartialExceptId<T> = Partial<T> & Pick<T, 'id'>;
+
+// Convert all properties to strings (form handling)
+type Stringify<T> = {
+  [K in keyof T]: string;
+};
+
+// Prefix all keys
+type PrefixKeys<T, P extends string> = {
+  [K in keyof T as `${P}${Capitalize<string & K>}`]: T[K];
+};
+
+// Create event handlers
+type EventHandlers<T> = {
+  [K in keyof T as `on${Capitalize<string & K>}Change`]: (value: T[K]) => void;
+};
+```
+
+### 🔒 **Access Modifiers & Readonly**
+
+#### Class Member Access
+```typescript
+class UserService {
+  private readonly logger: Logger;          // Internal use only
+  protected config: ServiceConfig;         // Subclass access
+  public readonly version: string;         // External read-only
+
+  constructor(
+    private readonly userRepo: UserRepository,  // Shorthand property
+    protected readonly eventBus: EventBus       // Protected shorthand
+  ) {}
+}
+```
+
+### 🎪 **Module System**
+
+#### Import/Export Patterns
+```typescript
+// Named exports (preferred in enterprise)
+export { UserService, UserController, UserModule };
+export type { User, CreateUserDto, UpdateUserDto };
+
+// Re-exports (barrel exports)
+export * from './user.service';
+export * from './user.controller';
+export { type UserEntity } from './user.entity';
+
+// Dynamic imports (Next.js code splitting)
+const LazyComponent = dynamic(() => import('./HeavyComponent'), {
+  loading: () => <Spinner />,
+  ssr: false
+});
+```
+
+### 🚨 **Error Handling Types**
+
+#### Result/Either Patterns
+```typescript
+// Result type for error handling
+type Result<T, E = Error> = 
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+// API error responses
+interface ApiError {
+  code: string;
+  message: string;
+  details?: Record<string, any>;
+}
+
+// Custom error classes
+abstract class BaseError extends Error {
+  abstract readonly code: string;
+  abstract readonly statusCode: number;
+}
+
+class ValidationError extends BaseError {
+  readonly code = 'VALIDATION_ERROR';
+  readonly statusCode = 400;
+}
+```
+
+### 🎭 **Type Guards & Assertions**
+
+#### Runtime Type Checking
+```typescript
+// Type guards
+function isUser(obj: any): obj is User {
+  return obj && typeof obj.id === 'string' && typeof obj.email === 'string';
+}
+
+// Assertion functions
+function assertIsUser(obj: any): asserts obj is User {
+  if (!isUser(obj)) {
+    throw new Error('Object is not a User');
+  }
+}
+
+// Discriminated union guards
+function isErrorState(state: AppState): state is ErrorState {
+  return state.status === 'error';
+}
+```
+
+### 📊 **Performance Types**
+
+#### Lazy Loading & Code Splitting
+```typescript
+// Lazy component types (Next.js)
+type LazyComponent<P = {}> = React.ComponentType<P> & {
+  preload?: () => Promise<void>;
+};
+
+// Async component factory
+type AsyncComponentFactory<P = {}> = () => Promise<{
+  default: React.ComponentType<P>;
+}>;
+
+// Memoization types
+type MemoizedFunction<T extends (...args: any[]) => any> = T & {
+  cache: Map<string, ReturnType<T>>;
+  clear: () => void;
+};
+```
+
+### 🎯 **Enterprise Patterns Quick Reference**
+
+#### Repository Pattern
+```typescript
+interface Repository<T, ID = string> {
+  findById(id: ID): Promise<T | null>;
+  findMany(criteria: Partial<T>): Promise<T[]>;
+  save(entity: T): Promise<T>;
+  remove(id: ID): Promise<void>;
+}
+```
+
+#### Service Layer
+```typescript
+@Injectable()
+export class UserService implements Repository<User> {
+  constructor(
+    @InjectRepository(User) private repo: Repository<User>,
+    private readonly eventBus: EventBus
+  ) {}
+}
+```
+
+#### DTO Pattern
+```typescript
+export class CreateUserDto {
+  @IsEmail() email: string;
+  @IsString() @MinLength(8) password: string;
+}
+
+export class UpdateUserDto extends PartialType(
+  OmitType(CreateUserDto, ['password'])
+) {}
+```
+
+#### Guard Pattern (NestJS)
+```typescript
+@Injectable()
+export class AuthGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean | Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    return this.validateToken(request.headers.authorization);
+  }
+}
+```
+
+#### Middleware Pattern
+```typescript
+export function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  // Middleware logic
+}
+
+// Type-safe middleware
+type Middleware<T = any> = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => T | Promise<T>;
+```
+
+### 💡 **Pro Tips for Enterprise Development**
+
+1. **Always use `readonly` for** IDs, timestamps, configuration
+2. **Prefer `interface` over `type`** for object shapes
+3. **Use `Partial<T>` and `Required<T>`** for DTOs
+4. **Implement proper error types** with discriminated unions
+5. **Use generic constraints** for reusable services
+6. **Leverage mapped types** for form handling
+7. **Use template literals** for type-safe APIs
+8. **Implement proper type guards** for runtime safety
+9. **Use module augmentation** for extending third-party types
+10. **Always type your async functions** with proper return types
+
+Keep this reference handy for quick TypeScript enterprise development! 🚀
