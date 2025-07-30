@@ -80,12 +80,33 @@ codedamnTypescriptFundamentals/
 ├── tsconfig.json         # TypeScript compiler configuration
 ├── scripts/              # Custom utility scripts
 │   └── run-file.js       # Dynamic file execution script
-├── src/                  # Source TypeScript files
+├── src/                  # Source TypeScript files (13 lessons)
 │   ├── 1_primitiveTypes.ts
-│   └── 2_instanceTypes.ts
-├── lib/                  # Compiled JavaScript output
+│   ├── 2_instanceTypes.ts
+│   ├── 3_ArrayAndTuple.ts
+│   ├── 4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts
+│   ├── 5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts
+│   ├── 6_structuralTyping.ts
+│   ├── 7_classTyping.ts
+│   ├── 8_genericsVsClassSpecialization.ts
+│   ├── 9_anyVsUnknownType.ts
+│   ├── 10_universalUtility.ts
+│   ├── 11_typeAssertion.ts
+│   ├── 12_typeCasting.ts
+│   └── 13_typeDeclarationForSpecialVariables.ts
+├── lib/                  # Compiled JavaScript output (auto-generated)
 │   ├── 1_primitiveTypes.js
-│   └── 2_instanceTypes.js
+│   ├── 2_instanceTypes.js
+│   ├── 3_ArrayAndTuple.js
+│   ├── 4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.js
+│   ├── 5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.js
+│   ├── 6_structuralTyping.js
+│   ├── 7_classTyping.js
+│   ├── 8_genericsVsClassSpecialization.js
+│   ├── 9_anyVsUnknownType.js
+│   ├── 10_universalUtility.js
+│   ├── 11_typeAssertion.js
+│   └── 12_typeCasting.js
 └── node_modules/         # NPM dependencies (ignored by Git)
 ```
 
@@ -108,15 +129,34 @@ TypeScript compiler configuration file that specifies:
 - **Source maps**: Disabled (can be enabled for debugging)
 
 ### `src/` Directory
-Contains TypeScript source files:
-- **`1_primitiveTypes.ts`**: Demonstrates basic TypeScript primitive types (string, number, boolean, etc.)
-- **`2_instanceTypes.ts`**: Covers TypeScript instance types (classes, generics, built-in types like RegExp, Set, Array, and custom generic classes)
+Contains TypeScript source files organized as progressive lessons:
+
+**Basic Types & Syntax:**
+- **`1_primitiveTypes.ts`**: Basic TypeScript primitive types (string, number, boolean, undefined, null, bigint, symbol)
+- **`2_instanceTypes.ts`**: Classes, generics, built-in instance types (RegExp, Set, Array), and custom generic classes
+- **`3_ArrayAndTuple.ts`**: Array type syntax shorthand and tuple types with fixed sizes
+
+**Advanced Type System:**
+- **`4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts`**: Object types, type aliases, and declaration differences
+- **`5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts`**: Function types and first-class function annotations
+- **`6_structuralTyping.ts`**: TypeScript's structural type system and duck typing
+- **`7_classTyping.ts`**: Class types, inheritance, and access modifiers
+
+**Generics & Type Safety:**
+- **`8_genericsVsClassSpecialization.ts`**: Generic types vs specialized class implementations
+- **`9_anyVsUnknownType.ts`**: Differences between `any` and `unknown` types for type safety
+- **`10_universalUtility.ts`**: Universal utility types and type manipulation
+
+**Type Manipulation:**
+- **`11_typeAssertion.ts`**: Type assertions and when to use them safely
+- **`12_typeCasting.ts`**: Type casting techniques and best practices
+- **`13_typeDeclarationForSpecialVariables.ts`**: Ambient declarations using `declare` keyword for external variables
 
 ### `lib/` Directory
-Contains compiled JavaScript files:
-- **`1_primitiveTypes.js`**: Compiled JavaScript version of primitive types lesson
-- **`2_instanceTypes.js`**: Compiled JavaScript version of instance types lesson
-- Files are automatically generated when running `npx tsc` or `npx tsc --watch`
+Contains compiled JavaScript files corresponding to each TypeScript lesson:
+- All `.ts` files are automatically compiled to `.js` equivalents
+- Files are generated when running `npx tsc`, `npm run build`, or `npm run watch`
+- Note: `13_typeDeclarationForSpecialVariables.js` is not generated as it contains only ambient declarations
 
 ### `scripts/` Directory
 Contains custom utility scripts:
@@ -147,10 +187,12 @@ npm run watch
 # Run the main file (1_primitiveTypes.js)
 npm start
 
-# Run any file by name (dynamic)
+# Run any file by name (dynamic) - Works with all 13 lessons
 npm run start:file <filename>
 npm run start:file 1_primitiveTypes
-npm run start:file 2_instanceTypes
+npm run start:file 3_ArrayAndTuple
+npm run start:file 9_anyVsUnknownType
+npm run start:file 13_typeDeclarationForSpecialVariables
 
 # Run specific TypeScript lessons (predefined)
 npm run start:primitive    # Runs 1_primitiveTypes.js
@@ -162,10 +204,11 @@ npm run start:instance     # Runs 2_instanceTypes.js
 # Compile and run main file
 npm run dev
 
-# Compile and run any file by name (dynamic)
+# Compile and run any file by name (dynamic) - Works with all lessons
 npm run dev:file <filename>
 npm run dev:file 1_primitiveTypes
-npm run dev:file 2_instanceTypes
+npm run dev:file 7_classTyping
+npm run dev:file 11_typeAssertion
 
 # Compile and run specific lessons (predefined)
 npm run dev:primitive      # Build and run 1_primitiveTypes.js
@@ -191,26 +234,53 @@ npm run rebuild
 
 2. **In another terminal, run your code:**
    ```bash
-   npm run start:file 1_primitiveTypes
+   npm run start:file 3_ArrayAndTuple        # Run arrays and tuples lesson
+   npm run start:file 9_anyVsUnknownType     # Run type safety lesson
+   npm run start:file 13_typeDeclarationForSpecialVariables  # Run ambient declarations
    ```
 
 3. **Or use the combined approach:**
    ```bash
-   npm run dev:file 1_primitiveTypes
+   npm run dev:file 7_classTyping            # Build and run class typing lesson
    ```
 
-4. **For new files, you can run any compiled TypeScript file:**
+4. **For any of the 13 lessons, you can run:**
    ```bash
-   # If you create src/3_advancedTypes.ts and compile it
-   npm run start:file 3_advancedTypes
+   # Examples with different lessons
+   npm run start:file 4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs
+   npm run start:file 8_genericsVsClassSpecialization
+   npm run start:file 12_typeCasting
    ```
 
 ## Learning Path
 
-This project structure supports learning TypeScript concepts in a progressive manner:
-1. **Primitive Types** (`1_primitiveTypes.ts`) - Basic type annotations (string, number, boolean, etc.)
-2. **Instance Types** (`2_instanceTypes.ts`) - Classes, generics, built-in instance types (RegExp, Set, Array), and custom generic classes (Queue example)
-3. **Advanced Types** - Unions, intersections, conditional types (future files)
+This project provides a comprehensive TypeScript learning curriculum with 13 progressive lessons:
+
+### **Level 1: Foundations (Lessons 1-3)**
+1. **Primitive Types** (`1_primitiveTypes.ts`) - Basic type annotations (string, number, boolean, undefined, null, bigint, symbol)
+2. **Instance Types** (`2_instanceTypes.ts`) - Classes, generics, built-in instance types, and custom generic classes
+3. **Arrays & Tuples** (`3_ArrayAndTuple.ts`) - Array syntax shorthand and fixed-size tuple types
+
+### **Level 2: Type System Mastery (Lessons 4-7)**
+4. **Object Types & Aliases** (`4_ObjectTypesMadeUsingTypeAliasAndLetVsConstDeclarationInTs.ts`) - Object typing and type aliases
+5. **Function Types** (`5_FunctionTypeDeclarationAndUsingTypeAliasForFirstClassFunctionTypeAnnotation.ts`) - Function signatures and first-class functions
+6. **Structural Typing** (`6_structuralTyping.ts`) - TypeScript's duck typing system
+7. **Class Typing** (`7_classTyping.ts`) - Class types, inheritance, and access modifiers
+
+### **Level 3: Advanced Concepts (Lessons 8-10)**
+8. **Generics vs Specialization** (`8_genericsVsClassSpecialization.ts`) - Generic types vs specialized implementations
+9. **Type Safety** (`9_anyVsUnknownType.ts`) - Understanding `any` vs `unknown` for better type safety
+10. **Utility Types** (`10_universalUtility.ts`) - Built-in utility types and type manipulation
+
+### **Level 4: Advanced Techniques (Lessons 11-13)**
+11. **Type Assertion** (`11_typeAssertion.ts`) - Safe type assertions and when to use them
+12. **Type Casting** (`12_typeCasting.ts`) - Type casting techniques and best practices
+13. **Ambient Declarations** (`13_typeDeclarationForSpecialVariables.ts`) - Using `declare` keyword for external variables
+
+### **Key Learning Notes:**
+- **Array Generics**: `Array<number>` specifies element type, not array size. Use tuple types `[number, number]` for fixed sizes.
+- **Progression**: Each lesson builds upon previous concepts, creating a solid TypeScript foundation.
+- **Hands-on**: All lessons include practical examples and can be executed individually using the dynamic scripts.
 
 ## Git Setup and .gitignore
 
