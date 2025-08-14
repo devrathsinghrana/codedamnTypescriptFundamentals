@@ -40,3 +40,40 @@ const square: SquareTypeGuard = { size: 5 };
 const rectangle: RectangleTypeGuard = { width: 4, height: 6 };
 console.log(`Square area: ${calculateShapeArea(square)}`); // Square area: 25
 console.log(`Rectangle area: ${calculateShapeArea(rectangle)}`); // Rectangle area: 24
+
+/*
+Type guards should generally be preferred over adding discriminant properties (like kind) to type aliases. Here's why:
+
+Type Guards (Preferred Approach)
+Advantages:
+
+Cleaner data structures - No need for artificial discriminant properties
+Works with existing APIs - Can handle data from external sources without modification
+More flexible - Can use any property or combination of properties for type checking
+Natural type checking - Uses actual structural differences between types
+*/
+
+/*
+Discriminated Unions (When to use)
+Use when:
+
+Complex type hierarchies with many similar types
+Performance is critical (discriminant checking is faster than property checking)
+You control the data structure from creation to consumption
+Types have overlapping properties that make type guards ambiguous
+*/
+
+/*
+Recommendation
+Start with type guards (like your current approach) because they:
+
+Keep your types clean and focused on business logic
+Work well with external data sources
+Are more maintainable for simple cases
+Consider discriminated unions when:
+
+You have 3+ types with potential property overlap
+Performance is critical
+You want exhaustive compile-time checking with switch statements
+You're building a complex domain model
+*/
